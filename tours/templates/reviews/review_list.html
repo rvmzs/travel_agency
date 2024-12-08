@@ -1,15 +1,13 @@
 <!-- tours/templates/reviews/review_list.html -->
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Review List</title>
-</head>
-<body>
+{% extends 'base.html' %}
+
+{% block title %}Review List{% endblock %}
+
+{% block content %}
     <h1>Review List</h1>
     <ul>
         {% for review in reviews %}
-            <li>{{ review.tourist.first_name }} {{ review.tourist.last_name }} - {{ review.tour.name_tour }}: {{ review.comment }}</li>
+            <li>{{ review.tourist.first_name }} {{ review.tourist.last_name }} - {{ review.tour.name_tour }} - {{ review.rating }}</li>
         {% endfor %}
     </ul>
-</body>
-</html>
+{% endblock %}

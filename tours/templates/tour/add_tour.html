@@ -1,15 +1,13 @@
 <!-- tours/templates/tours/add_tour.html -->
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Add Tour</title>
-</head>
-<body>
+{% extends 'base.html' %}
+
+{% block title %}Add Tour{% endblock %}
+
+{% block content %}
     <h1>Add Tour</h1>
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
         <button type="submit">Save</button>
     </form>
-</body>
-</html>
+{% endblock %}

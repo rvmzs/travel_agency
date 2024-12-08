@@ -1,15 +1,13 @@
 <!-- tours/templates/guides/guide_list.html -->
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Guide List</title>
-</head>
-<body>
+{% extends 'base.html' %}
+
+{% block title %}Guide List{% endblock %}
+
+{% block content %}
     <h1>Guide List</h1>
     <ul>
         {% for guide in guides %}
             <li>{{ guide.first_name }} {{ guide.last_name }} - {{ guide.language }}</li>
         {% endfor %}
     </ul>
-</body>
-</html>
+{% endblock %}

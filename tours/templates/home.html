@@ -1,0 +1,29 @@
+<!-- tours/templates/home.html -->
+{% extends 'base.html' %}
+{% load static %}  <!-- Загрузка библиотеки static -->
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+    <h1>Welcome to Travel Agency</h1>
+    <p>Explore our tours, guides, and reviews.</p>
+    <div id="register-form-container" class="form-container">
+        <h2>Register</h2>
+        <form method="post" action="{% url 'register' %}">
+            {% csrf_token %}
+            {{ register_form.as_p }}
+            <button type="submit">Register</button>
+        </form>
+    </div>
+    <div id="login-form-container" class="form-container">
+        <h2>Login</h2>
+        <form method="post" action="{% url 'login' %}">
+            {% csrf_token %}
+            {{ login_form.as_p }}
+            <button type="submit">Login</button>
+        </form>
+    </div>
+    <!-- Добавьте сюда ваши фотографии или картинки -->
+    <img src="{% static 'images/travel_1.jpg' %}" alt="Travel Image 1" style="width: 100%; max-width: 600px;">
+    <img src="{% static 'images/travel_2.jpg' %}" alt="Travel Image 2" style="width: 100%; max-width: 600px;">
+{% endblock %}

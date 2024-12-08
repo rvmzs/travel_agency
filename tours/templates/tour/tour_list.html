@@ -1,16 +1,13 @@
 <!-- tours/templates/tours/tour_list.html -->
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Tour List</title>
-</head>
-<body>
+{% extends 'base.html' %}
+
+{% block title %}Tour List{% endblock %}
+
+{% block content %}
     <h1>Tour List</h1>
-    <a href="{% url 'add_tour' %}">Add New Tour</a>
     <ul>
         {% for tour in tours %}
             <li>{{ tour.name_tour }} - {{ tour.description }} - {{ tour.price }}</li>
         {% endfor %}
     </ul>
-</body>
-</html>
+{% endblock %}

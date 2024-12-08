@@ -16,11 +16,12 @@ Including another URLconf
 # travel_agency/urls.py
 from django.contrib import admin
 from django.urls import path, include
+from tours import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('tours.urls')),  # Подключаем маршруты вашего приложения
+    path('', views.home, name='home'),
+    path('tours/', include('tours.urls')),
 ]
-
 
 
