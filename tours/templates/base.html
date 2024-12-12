@@ -1,4 +1,5 @@
 <!-- tours/templates/base.html -->
+{% load static %}  <!-- Загрузка библиотеки static -->
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,6 +10,7 @@
             margin: 0;
             padding: 0;
             background-color: #f4f4f4;
+            color: #333;
         }
         nav {
             background-color: #333;
@@ -59,6 +61,17 @@
         .form-container.active {
             display: block;
         }
+        .button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .button:hover {
+            background-color: #0056b3;
+        }
     </style>
 </head>
 <body>
@@ -73,13 +86,15 @@
                     <li><a href="{% url 'logout' %}">Logout</a></li>
                     {% if user.is_staff %}
                         <li><a href="{% url 'add_tour' %}">Add Tour</a></li>
+                        <li><a href="{% url 'add_guide' %}">Add Guide</a></li>
                         <li><a href="{% url 'admin:index' %}">Admin</a></li>
+                        <li><a href="{% url 'user_list' %}">Users</a></li>
                     {% endif %}
                 </div>
             {% else %}
                 <div class="auth-buttons">
-                    <li><a href="#" onclick="showForm('register')">Register</a></li>
-                    <li><a href="#" onclick="showForm('login')">Login</a></li>
+                    <li><a href="{% url 'register' %}">Register</a></li>
+                    <li><a href="{% url 'login' %}">Login</a></li>
                 </div>
             {% endif %}
         </ul>

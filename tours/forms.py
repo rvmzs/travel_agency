@@ -1,6 +1,6 @@
 # tours/forms.py
 from django import forms
-from .models import Tour
+from .models import Tour, Guide
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 
@@ -16,3 +16,9 @@ class RegisterForm(UserCreationForm):
     class Meta:
         model = User
         fields = ['username', 'email', 'password1', 'password2']
+
+
+class GuideForm(forms.ModelForm):
+    class Meta:
+        model = Guide
+        fields = ['first_name', 'last_name', 'language', 'email', 'phone']

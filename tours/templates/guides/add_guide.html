@@ -1,0 +1,13 @@
+<!-- tours/templates/guides/add_guide.html -->
+{% extends 'base.html' %}
+
+{% block title %}Add Guide{% endblock %}
+
+{% block content %}
+    <h1>Add Guide</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Save</button>
+    </form>
+{% endblock %}
