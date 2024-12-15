@@ -1,8 +1,9 @@
-<!-- tours/templates/base.html -->
-{% load static %}  <!-- Загрузка библиотеки static -->
+{% load static %}
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Travel Agency{% endblock %}</title>
     <style>
         body {
@@ -13,34 +14,34 @@
             color: #333;
         }
         nav {
-            background-color: #333;
-            overflow: hidden;
+            background-color: #007bff; /* Синий цвет для навигационной панели */
+            padding: 10px 20px;
         }
         nav ul {
             list-style-type: none;
             margin: 0;
             padding: 0;
             display: flex;
-            justify-content: space-between;
+            justify-content: space-around; /* Распределение по всей ширине */
         }
         nav ul li {
-            float: left;
+            flex: 1; /* Каждый элемент списка занимает равное пространство */
         }
         nav ul li a {
             display: block;
             color: white;
             text-align: center;
-            padding: 14px 16px;
+            padding: 14px 0; /* Убираем боковые отступы */
             text-decoration: none;
+            transition: background-color 0.3s;
         }
         nav ul li a:hover {
-            background-color: #ddd;
-            color: black;
+            background-color: #0056b3; /* Темно-синий цвет при наведении */
         }
         .auth-buttons {
             display: flex;
             justify-content: flex-end;
-            margin-right: 20px;
+            margin-left: auto;
         }
         .auth-buttons a {
             margin-left: 10px;
@@ -54,12 +55,16 @@
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
-        .form-container {
-            display: none;
-            margin-top: 20px;
+        .card {
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 10px 0;
+            transition: box-shadow 0.3s;
         }
-        .form-container.active {
-            display: block;
+        .card:hover {
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
         }
         .button {
             background-color: #007bff;
@@ -68,6 +73,7 @@
             padding: 10px 20px;
             border-radius: 5px;
             cursor: pointer;
+            transition: background-color 0.3s;
         }
         .button:hover {
             background-color: #0056b3;

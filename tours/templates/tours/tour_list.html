@@ -5,9 +5,23 @@
 
 {% block content %}
     <h1>Tour List</h1>
-    <ul>
+    <div class="tour-list">
         {% for tour in tours %}
-            <li>{{ tour.name_tour }} - {{ tour.description }} - {{ tour.price }}</li>
+            <div class="tour-item">
+                <h2>{{ tour.name_tour }}</h2>
+                <p><strong>Start Date:</strong> {{ tour.date_of_start }}</p>
+                <p><strong>End Date:</strong> {{ tour.date_of_end }}</p>
+                <p>{{ tour.description }}</p>
+                <p><strong>Price:</strong> ${{ tour.price }}</p>
+                <div class="rating">
+                    <p><strong>Average Rating:</strong> {{ tour.average_rating }}</p>
+                </div>
+                {% if user.is_authenticated %}
+                    <a href="{% url 'add_review' tour.id %}" class="button">Add Review</a>
+                {% else %}
+                    <p>Please <a href="{% url 'login' %}">log in</a> to add a review.</p>
+                {% endif %}
+            </div>
         {% endfor %}
-    </ul>
+    </div>
 {% endblock %}

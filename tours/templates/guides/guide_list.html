@@ -5,9 +5,13 @@
 
 {% block content %}
     <h1>Guide List</h1>
-    <ul>
+    <div class="guide-list">
         {% for guide in guides %}
-            <li>{{ guide.first_name }} {{ guide.last_name }} - {{ guide.language }}</li>
+            <div class="guide-item">
+                <h2>{{ guide.first_name }} {{ guide.last_name }}</h2>
+                <p><strong>Email:</strong> {{ guide.email }}</p>
+                <p><strong>Phone:</strong> {{ guide.phone }}</p>
+            </div>
         {% endfor %}
-    </ul>
+    </div>
 {% endblock %}

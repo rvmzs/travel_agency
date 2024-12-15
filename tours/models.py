@@ -1,13 +1,14 @@
 from django.db import models
-
+from django.contrib.auth.models import User
 # Create your models here.
 
 class Tourist(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, default=1)  # Убедитесь, что у вас есть пользователь с ID 1
     first_name = models.CharField(max_length=30)
-    last_name = models.CharField(max_length = 30)
-    email = models.EmailField(unique = True)
+    last_name = models.CharField(max_length=30)
+    email = models.EmailField(unique=True)
     phone = models.CharField(max_length=15)
-    date_of_birth = models.DateField(null =True, blank = True)
+    date_of_birth = models.DateField(null=True, blank=True)
 
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
@@ -65,7 +66,7 @@ class Review(models.Model):
     date_of_review = models.DateField(auto_now_add=True)
     
     def __str__(self):
-        return f"{self.tourist.first_name} {self.tourist.last_name} -- {self.tour.name}"
+        return f"{self.tourist.user.username} -- {self.tour.name_tour}"
 
     
 

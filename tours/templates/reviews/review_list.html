@@ -5,9 +5,15 @@
 
 {% block content %}
     <h1>Review List</h1>
-    <ul>
+    <div class="review-list">
         {% for review in reviews %}
-            <li>{{ review.tourist.first_name }} {{ review.tourist.last_name }} - {{ review.tour.name_tour }} - {{ review.rating }}</li>
+            <div class="review-item">
+                <h2>{{ review.tour.name_tour }}</h2>
+                <p><strong>Rating:</strong> {{ review.rating }}</p>
+                <p><strong>Comment:</strong> {{ review.comment }}</p>
+                <p><strong>Reviewed by:</strong> {{ review.tourist.user.username }}</p>
+                <p><strong>Date:</strong> {{ review.date_of_review }}</p>
+            </div>
         {% endfor %}
-    </ul>
+    </div>
 {% endblock %}

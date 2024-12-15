@@ -1,10 +1,11 @@
 # tours/views.py
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.models import User
-from .models import Guide, Tour, Review
-from .forms import GuideForm, TourForm, RegisterForm
+from .models import Guide, Tour, Review, Tourist
+from .forms import GuideForm, TourForm, RegisterForm, ReviewForm
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.decorators import login_required
 
 def home(request):
     register_form = RegisterForm()
@@ -76,3 +77,20 @@ def login_view(request):
 def logout_view(request):
     logout(request)
     return redirect('home')
+
+
+@login_required
+def add_review(request, tour_id):
+    tour = get_object_or_404(Tour, id=tour_id)
+    tourist, created = Tourist.objects.get_or_create(user=request.user, defaults={'email': request.user.email})
+    if request.method == 'POST':
+        form = ReviewForm(request.POST)
+        if form.is_valid():
+            review = form.save(commit=False)
+            review.tour = tour
+            review.tourist = tourist
+            review.save()
+            return redirect('tour_list')
+    else:
+        form = ReviewForm()
+    return render(request, 'tours/add_review.html', {'form': form, 'tour': tour})
