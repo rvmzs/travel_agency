@@ -1,10 +1,50 @@
-<!-- tours/templates/tours/tour_list.html -->
 {% extends 'base.html' %}
 
 {% block title %}Tour List{% endblock %}
 
 {% block content %}
     <h1>Tour List</h1>
+    
+    <!-- Вставка стилей CSS -->
+    <style>
+        .tour-list {
+            display: flex;
+            flex-direction: column;
+            gap: 20px; /* Расстояние между турами */
+        }
+
+        .tour-item {
+            border: 1px solid #ccc; /* Граница вокруг каждого тура */
+            border-radius: 8px; /* Скругление углов */
+            padding: 15px; /* Внутренние отступы */
+            background-color: #f9f9f9; /* Цвет фона */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Тень для визуального эффекта */
+        }
+
+        .tour-item h2 {
+            margin: 0 0 10px; /* Отступы для заголовка */
+        }
+
+        .tour-actions {
+            margin-top: 10px; /* Отступ сверху для действий */
+        }
+
+        .button {
+            background-color: #007bff; /* Цвет кнопок */
+            color: white; /* Цвет текста кнопок */
+            padding: 10px 15px; /* Внутренние отступы кнопок */
+            border: none; /* Без границы */
+            border-radius: 5px; /* Скругление углов кнопок */
+            text-decoration: none; /* Убираем подчеркивание */
+            display: inline-block; /* Визуальная кнопка */
+            margin-right: 5px; /* Отступ между кнопками */
+        }
+
+        .button:hover {
+            background-color: #0056b3; /* Цвет кнопки при наведении */
+        }
+    </style>
+
     <div class="tour-list">
         {% for tour in tours %}
             <div class="tour-item">
@@ -16,16 +56,26 @@
                 <div class="rating">
                     <p><strong>Average Rating:</strong> {{ tour.average_rating }}</p>
                 </div>
-                {% if user.is_authenticated %}
-                    <a href="{% url 'add_review' tour.id %}" class="button">Add Review</a>
-                    <a href="{% url 'order_tour' tour.id %}" class="button">Order Now</a>
-                    {% if user.is_staff %}
-                        <a href="{% url 'edit_tour' tour.id %}" class="button">Edit Tour</a>
-                        <a href="{% url 'delete_tour' tour.id %}" class="button">Delete Tour</a>
+                <div class="guides">
+                    <p><strong>Guides:</strong></p>
+                    <ul>
+                        {% for tourguide in tour.tourguide_set.all %}
+                            <li>{{ tourguide.guide.first_name }} {{ tourguide.guide.last_name }} ({{ tourguide.guide.language }})</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div class="tour-actions">
+                    {% if user.is_authenticated %}
+                        <a href="{% url 'add_review' tour.id %}" class="button">Add Review</a>
+                        <a href="{% url 'order_tour' tour.id %}" class="button">Order Now</a>
+                        {% if user.is_staff %}
+                            <a href="{% url 'edit_tour' tour.id %}" class="button">Edit Tour</a>
+                            <a href="{% url 'delete_tour' tour.id %}" class="button">Delete Tour</a>
+                        {% endif %}
+                    {% else %}
+                        <p>Please <a href="{% url 'login' %}">log in</a> to add a review or order a tour.</p>
                     {% endif %}
-                {% else %}
-                    <p>Please <a href="{% url 'login' %}">log in</a> to add a review or order a tour.</p>
-                {% endif %}
+                </div>
             </div>
         {% endfor %}
     </div>

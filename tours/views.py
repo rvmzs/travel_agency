@@ -153,3 +153,12 @@ def delete_guide(request, guide_id):
         guide.delete()
         return redirect('guide_list')
     return render(request, 'guides/delete_guide.html', {'guide': guide})
+
+
+@login_required
+def delete_order(request, order_id):
+    order = get_object_or_404(Order, id=order_id, user=request.user)
+    if request.method == 'POST':
+        order.delete()
+        return redirect('user_orders')
+    return render(request, 'users/delete_order.html', {'order': order})

@@ -1,10 +1,35 @@
-<!-- tours/templates/reviews/review_list.html -->
 {% extends 'base.html' %}
 
 {% block title %}Review List{% endblock %}
 
 {% block content %}
     <h1>Review List</h1>
+    
+    <!-- Вставка стилей CSS -->
+    <style>
+        .review-list {
+            display: flex;
+            flex-direction: column;
+            gap: 20px; /* Расстояние между отзывами */
+        }
+
+        .review-item {
+            border: 1px solid #ccc; /* Граница вокруг каждого отзыва */
+            border-radius: 8px; /* Скругление углов */
+            padding: 15px; /* Внутренние отступы */
+            background-color: #f9f9f9; /* Цвет фона */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Тень для визуального эффекта */
+        }
+
+        .review-item h2 {
+            margin: 0 0 10px; /* Отступы для заголовка */
+        }
+
+        .review-item p {
+            margin: 5px 0; /* Отступы между параграфами */
+        }
+    </style>
+
     <div class="review-list">
         {% for review in reviews %}
             <div class="review-item">

@@ -1,0 +1,13 @@
+<!-- tours/templates/users/delete_order.html -->
+{% extends 'base.html' %}
+
+{% block title %}Delete Order{% endblock %}
+
+{% block content %}
+    <h1>Delete Order: {{ order.tour.name_tour }}</h1>
+    <p>Are you sure you want to delete this order?</p>
+    <form method="post" action="">
+        {% csrf_token %}
+        <button type="submit" class="button">Confirm</button>
+    </form>
+{% endblock %}

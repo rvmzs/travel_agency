@@ -1,16 +1,53 @@
-<!-- tours/templates/guides/guide_list.html -->
 {% extends 'base.html' %}
 
 {% block title %}Guide List{% endblock %}
 
 {% block content %}
     <h1>Guide List</h1>
+    
+    <!-- Вставка стилей CSS -->
+    <style>
+        .guide-list {
+            display: flex;
+            flex-direction: column;
+            gap: 20px; /* Расстояние между гидами */
+        }
+
+        .guide-item {
+            border: 1px solid #ccc; /* Граница вокруг каждого гида */
+            border-radius: 8px; /* Скругление углов */
+            padding: 15px; /* Внутренние отступы */
+            background-color: #f9f9f9; /* Цвет фона */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Тень для визуального эффекта */
+        }
+
+        .guide-item h2 {
+            margin: 0 0 10px; /* Отступы для заголовка */
+        }
+
+        .button {
+            background-color: #007bff; /* Цвет кнопок */
+            color: white; /* Цвет текста кнопок */
+            padding: 10px 15px; /* Внутренние отступы кнопок */
+            border: none; /* Без границы */
+            border-radius: 5px; /* Скругление углов кнопок */
+            text-decoration: none; /* Убираем подчеркивание */
+            display: inline-block; /* Визуальная кнопка */
+            margin-right: 5px; /* Отступ между кнопками */
+        }
+
+        .button:hover {
+            background-color: #0056b3; /* Цвет кнопки при наведении */
+        }
+    </style>
+
     <div class="guide-list">
         {% for guide in guides %}
             <div class="guide-item">
                 <h2>{{ guide.first_name }} {{ guide.last_name }}</h2>
                 <p><strong>Email:</strong> {{ guide.email }}</p>
                 <p><strong>Phone:</strong> {{ guide.phone }}</p>
+                <p><strong>Language:</strong> {{ guide.language }}</p>
                 {% if user.is_authenticated and user.is_staff %}
                     <a href="{% url 'edit_guide' guide.id %}" class="button">Edit Guide</a>
                     <a href="{% url 'delete_guide' guide.id %}" class="button">Delete Guide</a>

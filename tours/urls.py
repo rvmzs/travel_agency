@@ -21,5 +21,6 @@ urlpatterns = [
     path('tours/<int:tour_id>/delete/', views.delete_tour, name='delete_tour'),
     path('guides/<int:guide_id>/edit/', views.edit_guide, name='edit_guide'),
     path('guides/<int:guide_id>/delete/', views.delete_guide, name='delete_guide'),
+    path('orders/<int:order_id>/delete/', views.delete_order, name='delete_order'),
 ]
 

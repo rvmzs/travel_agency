@@ -1,10 +1,51 @@
-<!-- tours/templates/users/user_orders.html -->
 {% extends 'base.html' %}
 
 {% block title %}My Orders{% endblock %}
 
 {% block content %}
     <h1>My Orders</h1>
+    
+    <!-- Вставка стилей CSS -->
+    <style>
+        .order-list {
+            display: flex;
+            flex-direction: column;
+            gap: 20px; /* Расстояние между заказами */
+        }
+
+        .order-item {
+            border: 1px solid #ccc; /* Граница вокруг каждого заказа */
+            border-radius: 8px; /* Скругление углов */
+            padding: 20px; /* Внутренние отступы */
+            background-color: #f9f9f9; /* Цвет фона */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Тень для визуального эффекта */
+        }
+
+        .order-item h2 {
+            margin: 0 0 10px; /* Отступы для заголовка */
+        }
+
+        .order-item p {
+            margin: 5px 0; /* Отступы между параграфами */
+        }
+
+        .button {
+            background-color: #dc3545; /* Цвет кнопки удаления */
+            color: white; /* Цвет текста кнопки */
+            padding: 10px 15px; /* Внутренние отступы кнопки */
+            border: none; /* Без границы */
+            border-radius: 5px; /* Скругление углов кнопки */
+            text-decoration: none; /* Убираем подчеркивание */
+            display: inline-block; /* Визуальная кнопка */
+            margin-top: 10px; /* Отступ сверху */
+            cursor: pointer; /* Указатель при наведении */
+        }
+
+        .button:hover {
+            background-color: #c82333; /* Цвет кнопки при наведении */
+        }
+    </style>
+
     <div class="order-list">
         {% for order in orders %}
             <div class="order-item">
@@ -15,6 +56,7 @@
                 <p><strong>Price:</strong> ${{ order.tour.price }}</p>
                 <p><strong>Order Date:</strong> {{ order.date_of_booking }}</p>
                 <p><strong>Status:</strong> {{ order.status }}</p>
+                <a href="{% url 'delete_order' order.id %}" class="button">Delete Order</a>
             </div>
         {% endfor %}
     </div>
