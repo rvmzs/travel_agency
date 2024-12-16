@@ -1,0 +1,16 @@
+<!-- tours/templates/tours/order_tour.html -->
+{% extends 'base.html' %}
+
+{% block title %}Order Tour{% endblock %}
+
+{% block content %}
+    <h1>Order Tour: {{ tour.name_tour }}</h1>
+    <p><strong>Start Date:</strong> {{ tour.date_of_start }}</p>
+    <p><strong>End Date:</strong> {{ tour.date_of_end }}</p>
+    <p>{{ tour.description }}</p>
+    <p><strong>Price:</strong> ${{ tour.price }}</p>
+    <form method="post" action="">
+        {% csrf_token %}
+        <button type="submit" class="button">Order Now</button>
+    </form>
+{% endblock %}

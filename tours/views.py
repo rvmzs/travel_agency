@@ -1,7 +1,7 @@
 # tours/views.py
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.models import User
-from .models import Guide, Tour, Review, Tourist
+from .models import Guide, Tour, Review, Tourist, Order
 from .forms import GuideForm, TourForm, RegisterForm, ReviewForm
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.forms import AuthenticationForm
@@ -94,3 +94,15 @@ def add_review(request, tour_id):
     else:
         form = ReviewForm()
     return render(request, 'tours/add_review.html', {'form': form, 'tour': tour})
+
+
+@login_required
+def order_tour(request, tour_id):
+    tour = get_object_or_404(Tour, id=tour_id)
+    if request.method == 'POST':
+        order = Order.objects.create(user=request.user, tour=tour, status='Booked')
+        return redirect('order_success')
+    return render(request, 'tours/order_tour.html', {'tour': tour})
+
+def order_success(request):
+    return render(request, 'tours/order_success.html')

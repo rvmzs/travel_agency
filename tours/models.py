@@ -47,16 +47,24 @@ class TourGuide(models.Model):
         return f"{self.tour.name_tour} - {self.guide.first_name} {self.guide.last_name}"
 
 
+# class Order(models.Model):
+#     tourist =  models.ForeignKey(Tourist, on_delete=models.CASCADE)
+#     tour = models.ForeignKey(Tour, on_delete=models.CASCADE)
+#     # добавить еще ключи ?
+#     date_of_booking = models.DateField(auto_now_add= True)
+#     status = models.CharField(max_length = 50)
+
+#     def __str__(self):
+#         return f"Order {self.id}  by {self.tourist.first_name} {self.tourist.last_name}"
+    
 class Order(models.Model):
-    tourist =  models.ForeignKey(Tourist, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, default=1)  # Убедитесь, что у вас есть пользователь с ID 1
     tour = models.ForeignKey(Tour, on_delete=models.CASCADE)
-    # добавить еще ключи ?
-    date_of_booking = models.DateField(auto_now_add= True)
-    status = models.CharField(max_length = 50)
+    date_of_booking = models.DateField(auto_now_add=True)
+    status = models.CharField(max_length=50)
 
     def __str__(self):
-        return f"Order {self.id}  by {self.tourist.first_name} {self.tourist.last_name}"
-    
+        return f"Order {self.id} by {self.user.username}"
 
 class Review(models.Model):
     tourist = models.ForeignKey(Tourist, on_delete=models.CASCADE)

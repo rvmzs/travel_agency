@@ -18,8 +18,9 @@
                 </div>
                 {% if user.is_authenticated %}
                     <a href="{% url 'add_review' tour.id %}" class="button">Add Review</a>
+                    <a href="{% url 'order_tour' tour.id %}" class="button">Order Now</a>
                 {% else %}
-                    <p>Please <a href="{% url 'login' %}">log in</a> to add a review.</p>
+                    <p>Please <a href="{% url 'login' %}">log in</a> to add a review or order a tour.</p>
                 {% endif %}
             </div>
         {% endfor %}
