@@ -1,0 +1,13 @@
+<!-- tours/templates/guides/edit_guide.html -->
+{% extends 'base.html' %}
+
+{% block title %}Edit Guide{% endblock %}
+
+{% block content %}
+    <h1>Edit Guide: {{ guide.first_name }} {{ guide.last_name }}</h1>
+    <form method="post" action="">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="button">Save Changes</button>
+    </form>
+{% endblock %}

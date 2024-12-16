@@ -11,6 +11,10 @@
                 <h2>{{ guide.first_name }} {{ guide.last_name }}</h2>
                 <p><strong>Email:</strong> {{ guide.email }}</p>
                 <p><strong>Phone:</strong> {{ guide.phone }}</p>
+                {% if user.is_authenticated and user.is_staff %}
+                    <a href="{% url 'edit_guide' guide.id %}" class="button">Edit Guide</a>
+                    <a href="{% url 'delete_guide' guide.id %}" class="button">Delete Guide</a>
+                {% endif %}
             </div>
         {% endfor %}
     </div>

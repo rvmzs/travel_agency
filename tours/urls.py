@@ -16,5 +16,10 @@ urlpatterns = [
     path('tours/<int:tour_id>/add_review/', views.add_review, name='add_review'),
     path('tours/<int:tour_id>/order/', views.order_tour, name='order_tour'),
     path('order_success/', views.order_success, name='order_success'),
+    path('user_orders/', views.user_orders, name='user_orders'),
+    path('tours/<int:tour_id>/edit/', views.edit_tour, name='edit_tour'),
+    path('tours/<int:tour_id>/delete/', views.delete_tour, name='delete_tour'),
+    path('guides/<int:guide_id>/edit/', views.edit_guide, name='edit_guide'),
+    path('guides/<int:guide_id>/delete/', views.delete_guide, name='delete_guide'),
 ]
 

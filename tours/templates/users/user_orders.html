@@ -1,0 +1,21 @@
+<!-- tours/templates/users/user_orders.html -->
+{% extends 'base.html' %}
+
+{% block title %}My Orders{% endblock %}
+
+{% block content %}
+    <h1>My Orders</h1>
+    <div class="order-list">
+        {% for order in orders %}
+            <div class="order-item">
+                <h2>{{ order.tour.name_tour }}</h2>
+                <p><strong>Start Date:</strong> {{ order.tour.date_of_start }}</p>
+                <p><strong>End Date:</strong> {{ order.tour.date_of_end }}</p>
+                <p>{{ order.tour.description }}</p>
+                <p><strong>Price:</strong> ${{ order.tour.price }}</p>
+                <p><strong>Order Date:</strong> {{ order.date_of_booking }}</p>
+                <p><strong>Status:</strong> {{ order.status }}</p>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

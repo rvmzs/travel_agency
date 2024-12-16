@@ -1,0 +1,13 @@
+<!-- tours/templates/tours/delete_tour.html -->
+{% extends 'base.html' %}
+
+{% block title %}Delete Tour{% endblock %}
+
+{% block content %}
+    <h1>Delete Tour: {{ tour.name_tour }}</h1>
+    <p>Are you sure you want to delete this tour?</p>
+    <form method="post" action="">
+        {% csrf_token %}
+        <button type="submit" class="button">Confirm</button>
+    </form>
+{% endblock %}

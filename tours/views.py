@@ -106,3 +106,50 @@ def order_tour(request, tour_id):
 
 def order_success(request):
     return render(request, 'tours/order_success.html')
+
+@login_required
+def user_orders(request):
+    orders = Order.objects.filter(user=request.user)
+    return render(request, 'users/user_orders.html', {'orders': orders})
+
+####################################################
+
+@login_required
+def edit_tour(request, tour_id):
+    tour = get_object_or_404(Tour, id=tour_id)
+    if request.method == 'POST':
+        form = TourForm(request.POST, instance=tour)
+        if form.is_valid():
+            form.save()
+            return redirect('tour_list')
+    else:
+        form = TourForm(instance=tour)
+    return render(request, 'tours/edit_tour.html', {'form': form, 'tour': tour})
+
+@login_required
+def delete_tour(request, tour_id):
+    tour = get_object_or_404(Tour, id=tour_id)
+    if request.method == 'POST':
+        tour.delete()
+        return redirect('tour_list')
+    return render(request, 'tours/delete_tour.html', {'tour': tour})
+
+@login_required
+def edit_guide(request, guide_id):
+    guide = get_object_or_404(Guide, id=guide_id)
+    if request.method == 'POST':
+        form = GuideForm(request.POST, instance=guide)
+        if form.is_valid():
+            form.save()
+            return redirect('guide_list')
+    else:
+        form = GuideForm(instance=guide)
+    return render(request, 'guides/edit_guide.html', {'form': form, 'guide': guide})
+
+@login_required
+def delete_guide(request, guide_id):
+    guide = get_object_or_404(Guide, id=guide_id)
+    if request.method == 'POST':
+        guide.delete()
+        return redirect('guide_list')
+    return render(request, 'guides/delete_guide.html', {'guide': guide})
