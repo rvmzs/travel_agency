@@ -1,10 +1,9 @@
 from django.db import models
 from django.core.exceptions import ValidationError
 from django.contrib.auth.models import User
-# Create your models here.
 
 class Tourist(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, default=1)  # Убедитесь, что у вас есть пользователь с ID 1
+    user = models.OneToOneField(User, on_delete=models.CASCADE, default=1)  
     first_name = models.CharField(max_length=30)
     last_name = models.CharField(max_length=30)
     email = models.EmailField(unique=True)
@@ -15,12 +14,12 @@ class Tourist(models.Model):
         return f"{self.first_name} {self.last_name}"
     
     def save(self, *args, **kwargs):
-        # Обновляем значения в таблице User
+        
         self.user.first_name = self.first_name
         self.user.last_name = self.last_name
         self.user.email = self.email
-        self.user.save()  # Сохранить изменения в User
-        super().save(*args, **kwargs)  # Затем вызвать метод родителя
+        self.user.save()  
+        super().save(*args, **kwargs)  
 
 
 class Tour(models.Model):

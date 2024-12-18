@@ -1,54 +1,51 @@
-<!-- tours/templates/users/user_list.html -->
 {% extends 'base.html' %}
 
-{% block title %}User  List{% endblock %}
+{% block title %}User List{% endblock %}
 
 {% block content %}
     <h1>User List</h1>
 
-    <!-- Вставка стилей CSS -->
     <style>
         .user-list {
             display: flex;
             flex-direction: column;
-            gap: 20px; /* Расстояние между пользователями */
+            gap: 20px;
         }
 
         .user-item {
-            border: 1px solid #ccc; /* Граница вокруг каждого пользователя */
-            border-radius: 8px; /* Скругление углов */
-            padding: 15px; /* Внутренние отступы */
-            background-color: #f9f9f9; /* Цвет фона */
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Тень для визуального эффекта */
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 15px;
+            background-color: #f9f9f9;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
         .user-item h2 {
-            margin: 0 0 10px; /* Отступы для заголовка */
+            margin: 0 0 10px;
         }
 
         .user-item p {
-            margin: 5px 0; /* Отступы между параграфами */
+            margin: 5px 0;
         }
 
         .button {
             display: inline-block;
             margin-top: 10px;
             padding: 10px 15px;
-            background-color: #007BFF; /* Цвет фона кнопки */
-            color: white; /* Цвет текста кнопки */
-            text-decoration: none; /* Убираем подчеркивание */
-            border-radius: 5px; /* Скругление углов кнопки */
+            background-color: #007BFF;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
         }
 
         .button:hover {
-            background-color: #0056b3; /* Цвет фона кнопки при наведении */
+            background-color: #0056b3;
         }
     </style>
 
     <div class="user-list">
         {% for user in users %}
             <div class="user-item">
-                <!--<h2>{{ forloop.counter }}. {{ user.username }}</h2> -->
                 <h2>{{ user.username }}</h2>
                 <p><strong>Email:</strong> {{ user.email }}</p>
                 <p><strong>First Name:</strong> {{ user.tourist.first_name }}</p>

@@ -37,7 +37,7 @@
 
         <div style="margin-bottom: 15px;">
             <label for="id_phone" style="display: block;">Номер телефона:</label>
-            {{ tourist_form.phone }}  <!-- Убедитесь, что это правильно поле -->
+            {{ tourist_form.phone }}  
             {% if tourist_form.phone.errors %}
                 <div class="error">{{ tourist_form.phone.errors }}</div>
             {% endif %}
@@ -45,7 +45,7 @@
 
         <div style="margin-bottom: 15px;">
             <label for="id_date_of_birth" style="display: block;">Дата рождения:</label>
-            {{ tourist_form.date_of_birth }}  <!-- Убедитесь, что это правильно поле -->
+            {{ tourist_form.date_of_birth }}  
             {% if tourist_form.date_of_birth.errors %}
                 <div class="error">{{ tourist_form.date_of_birth.errors }}</div>
             {% endif %}

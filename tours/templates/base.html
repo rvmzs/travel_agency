@@ -15,7 +15,7 @@
             color: #333;
         }
         nav {
-            background-color: #007bff; /* Синий цвет для навигационной панели */
+            background-color: #007bff; 
             padding: 10px 20px;
         }
         nav ul {
@@ -23,21 +23,21 @@
             margin: 0;
             padding: 0;
             display: flex;
-            justify-content: space-around; /* Распределение по всей ширине */
+            justify-content: space-around; 
         }
         nav ul li {
-            flex: 1; /* Каждый элемент списка занимает равное пространство */
+            flex: 1; 
         }
         nav ul li a {
             display: block;
             color: white;
             text-align: center;
-            padding: 14px 0; /* Убираем боковые отступы */
+            padding: 14px 0; 
             text-decoration: none;
             transition: background-color 0.3s;
         }
         nav ul li a:hover {
-            background-color: #0056b3; /* Темно-синий цвет при наведении */
+            background-color: #0056b3;
         }
         .auth-buttons {
             display: flex;
@@ -93,7 +93,7 @@
                     <li><a href="{% url 'logout' %}">Logout</a></li>
                     {% if not user.is_staff %}
                         <li><a href="{% url 'user_orders' %}">My Orders</a></li>
-                        <li><a href="{% url 'edit_profile' %}">Edit Profile</a></li> <!-- Добавляем кнопку для редактирования профиля -->
+                        <li><a href="{% url 'edit_profile' %}">Edit Profile</a></li> 
                     {% endif %}
                     {% if user.is_staff %}
                         <li><a href="{% url 'add_tour' %}">Add Tour</a></li>

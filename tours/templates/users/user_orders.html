@@ -4,45 +4,44 @@
 
 {% block content %}
     <h1>My Orders</h1>
-    
-    <!-- Вставка стилей CSS -->
+
     <style>
         .order-list {
             display: flex;
             flex-direction: column;
-            gap: 20px; /* Расстояние между заказами */
+            gap: 20px;
         }
 
         .order-item {
-            border: 1px solid #ccc; /* Граница вокруг каждого заказа */
-            border-radius: 8px; /* Скругление углов */
-            padding: 20px; /* Внутренние отступы */
-            background-color: #f9f9f9; /* Цвет фона */
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Тень для визуального эффекта */
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 20px;
+            background-color: #f9f9f9;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
         .order-item h2 {
-            margin: 0 0 10px; /* Отступы для заголовка */
+            margin: 0 0 10px;
         }
 
         .order-item p {
-            margin: 5px 0; /* Отступы между параграфами */
+            margin: 5px 0;
         }
 
         .button {
-            background-color: #dc3545; /* Цвет кнопки удаления */
-            color: white; /* Цвет текста кнопки */
-            padding: 10px 15px; /* Внутренние отступы кнопки */
-            border: none; /* Без границы */
-            border-radius: 5px; /* Скругление углов кнопки */
-            text-decoration: none; /* Убираем подчеркивание */
-            display: inline-block; /* Визуальная кнопка */
-            margin-top: 10px; /* Отступ сверху */
-            cursor: pointer; /* Указатель при наведении */
+            background-color: #dc3545;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 10px;
+            cursor: pointer;
         }
 
         .button:hover {
-            background-color: #c82333; /* Цвет кнопки при наведении */
+            background-color: #c82333;
         }
     </style>
 
