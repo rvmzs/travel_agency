@@ -1,10 +1,11 @@
+<!-- tours/templates/reviews/review_list.html -->
 {% extends 'base.html' %}
 
 {% block title %}Review List{% endblock %}
 
 {% block content %}
     <h1>Review List</h1>
-    
+
     <!-- Вставка стилей CSS -->
     <style>
         .review-list {
@@ -28,16 +29,33 @@
         .review-item p {
             margin: 5px 0; /* Отступы между параграфами */
         }
+
+        .button {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 10px 15px;
+            background-color: #007BFF; /* Цвет фона кнопки */
+            color: white; /* Цвет текста кнопки */
+            text-decoration: none; /* Убираем подчеркивание */
+            border-radius: 5px; /* Скругление углов кнопки */
+        }
+
+        .button:hover {
+            background-color: #0056b3; /* Цвет фона кнопки при наведении */
+        }
     </style>
 
     <div class="review-list">
         {% for review in reviews %}
             <div class="review-item">
                 <h2>{{ review.tour.name_tour }}</h2>
+                <p><strong>Tourist:</strong> {{ review.tourist.user.username }}</p>
                 <p><strong>Rating:</strong> {{ review.rating }}</p>
                 <p><strong>Comment:</strong> {{ review.comment }}</p>
-                <p><strong>Reviewed by:</strong> {{ review.tourist.user.username }}</p>
-                <p><strong>Date:</strong> {{ review.date_of_review }}</p>
+                <p><strong>Date of Review:</strong> {{ review.date_of_review }}</p>
+                {% if request.user.is_staff %}
+                    <a href="{% url 'delete_review' review.id %}" class="button">Delete Review</a>
+                {% endif %}
             </div>
         {% endfor %}
     </div>

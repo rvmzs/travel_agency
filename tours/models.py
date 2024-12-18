@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.exceptions import ValidationError
 from django.contrib.auth.models import User
 # Create your models here.
 
@@ -23,6 +24,12 @@ class Tour(models.Model):
 
     def __str__(self):
         return self.name_tour
+    
+    def average_rating(self):
+        reviews = self.reviews.all()
+        if reviews:
+            return sum(review.rating for review in reviews) / reviews.count()
+        return 0
     
 
 class Guide(models.Model):
@@ -68,13 +75,17 @@ class Order(models.Model):
 
 class Review(models.Model):
     tourist = models.ForeignKey(Tourist, on_delete=models.CASCADE)
-    tour = models.ForeignKey(Tour, on_delete=models.CASCADE)
+    tour = models.ForeignKey(Tour, on_delete=models.CASCADE, related_name='reviews')
     rating = models.IntegerField()
     comment = models.TextField()
     date_of_review = models.DateField(auto_now_add=True)
     
     def __str__(self):
         return f"{self.tourist.user.username} -- {self.tour.name_tour}"
+    
+    def clean(self):
+        if self.rating is not None and not (1 <= self.rating <= 5):
+            raise ValidationError('Rating must be between 1 and 5.')
 
     
 

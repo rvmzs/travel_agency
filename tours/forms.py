@@ -1,6 +1,6 @@
 # tours/forms.py
 from django import forms
-from .models import Tour, Guide, Review, TourGuide
+from .models import Tour, Guide, Review, TourGuide, Tourist
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 
@@ -32,16 +32,27 @@ class TourForm(forms.ModelForm):
 
 class RegisterForm(UserCreationForm):
     email = forms.EmailField(required=True)
+    first_name = forms.CharField(max_length=30, required=True)
+    last_name = forms.CharField(max_length=30, required=True)
+    phone = forms.CharField(max_length=15, required=True)
 
     class Meta:
         model = User
-        fields = ['username', 'email', 'password1', 'password2']
+        fields = ['username', 'email', 'first_name', 'last_name', 'phone', 'password1', 'password2']
 
     def save(self, commit=True):
         user = super().save(commit=False)
         user.email = self.cleaned_data['email']
+        user.first_name = self.cleaned_data['first_name']
+        user.last_name = self.cleaned_data['last_name']
         if commit:
             user.save()
+            Tourist.objects.get_or_create(user=user, defaults={
+                'first_name': user.first_name,
+                'last_name': user.last_name,
+                'email': user.email,
+                'phone': self.cleaned_data['phone']
+            })
         return user
 
 class GuideForm(forms.ModelForm):
@@ -52,4 +63,15 @@ class GuideForm(forms.ModelForm):
 class ReviewForm(forms.ModelForm):
     class Meta:
         model = Review
-        fields = ['comment', 'rating']
+        fields = ['rating', 'comment']
+
+    def clean_rating(self):
+        rating = self.cleaned_data.get('rating')
+        if rating is not None and not (1 <= rating <= 5):
+            raise forms.ValidationError('Rating must be between 1 and 5.')
+        return rating
+
+class TouristForm(forms.ModelForm):
+    class Meta:
+        model = Tourist
+        fields = ['first_name', 'last_name', 'email', 'phone', 'date_of_birth']

@@ -54,7 +54,7 @@
                 <p>{{ tour.description }}</p>
                 <p><strong>Price:</strong> ${{ tour.price }}</p>
                 <div class="rating">
-                    <p><strong>Average Rating:</strong> {{ tour.average_rating }}</p>
+                    <p><strong>Average Rating:</strong> {{ tour.average_rating|floatformat:2 }}</p>
                 </div>
                 <div class="guides">
                     <p><strong>Guides:</strong></p>
@@ -66,8 +66,10 @@
                 </div>
                 <div class="tour-actions">
                     {% if user.is_authenticated %}
+                        {% if not user.is_staff %}
                         <a href="{% url 'add_review' tour.id %}" class="button">Add Review</a>
                         <a href="{% url 'order_tour' tour.id %}" class="button">Order Now</a>
+                        {% endif %}
                         {% if user.is_staff %}
                             <a href="{% url 'edit_tour' tour.id %}" class="button">Edit Tour</a>
                             <a href="{% url 'delete_tour' tour.id %}" class="button">Delete Tour</a>

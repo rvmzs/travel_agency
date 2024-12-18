@@ -2,19 +2,14 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.models import User
 from .models import Guide, Tour, Review, Tourist, Order
-from .forms import GuideForm, TourForm, RegisterForm, ReviewForm
+from .forms import GuideForm, TourForm, RegisterForm, ReviewForm, TouristForm
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
+from django.contrib.admin.views.decorators import staff_member_required
 
 def home(request):
-    register_form = RegisterForm()
-    login_form = AuthenticationForm()
-    context = {
-        'register_form': register_form,
-        'login_form': login_form,
-    }
-    return render(request, 'home.html', context)
+    return render(request, 'home.html')
 
 def guide_list(request):
     guides = Guide.objects.all()
@@ -52,6 +47,16 @@ def add_tour(request):
         form = TourForm()
     return render(request, 'tours/add_tour.html', {'form': form})
 
+# def register(request):
+#     if request.method == 'POST':
+#         form = RegisterForm(request.POST)
+#         if form.is_valid():
+#             user = form.save()
+#             login(request, user)
+#             return redirect('home')
+#     else:
+#         form = RegisterForm()
+#     return render(request, 'auth/register.html', {'form': form})
 def register(request):
     if request.method == 'POST':
         form = RegisterForm(request.POST)
@@ -62,6 +67,7 @@ def register(request):
     else:
         form = RegisterForm()
     return render(request, 'auth/register.html', {'form': form})
+
 
 def login_view(request):
     if request.method == 'POST':
@@ -82,7 +88,7 @@ def logout_view(request):
 @login_required
 def add_review(request, tour_id):
     tour = get_object_or_404(Tour, id=tour_id)
-    tourist, created = Tourist.objects.get_or_create(user=request.user, defaults={'email': request.user.email})
+    tourist = get_object_or_404(Tourist, user=request.user)
     if request.method == 'POST':
         form = ReviewForm(request.POST)
         if form.is_valid():
@@ -91,10 +97,12 @@ def add_review(request, tour_id):
             review.tourist = tourist
             review.save()
             return redirect('tour_list')
+        else:
+            # Отображение ошибок валидации
+            return render(request, 'tours/add_review.html', {'form': form, 'tour': tour})
     else:
         form = ReviewForm()
     return render(request, 'tours/add_review.html', {'form': form, 'tour': tour})
-
 
 @login_required
 def order_tour(request, tour_id):
@@ -162,3 +170,33 @@ def delete_order(request, order_id):
         order.delete()
         return redirect('user_orders')
     return render(request, 'users/delete_order.html', {'order': order})
+
+@login_required
+def delete_user(request, user_id):
+    user = get_object_or_404(User, id=user_id)
+    if request.method == 'POST':
+        user.delete()
+        return redirect('user_list')
+    return render(request, 'users/delete_user.html', {'user': user})
+
+@staff_member_required
+def edit_user(request, user_id):
+    user = get_object_or_404(User, id=user_id)
+    tourist = get_object_or_404(Tourist, user=user)
+    if request.method == 'POST':
+        form = TouristForm(request.POST, instance=tourist)
+        if form.is_valid():
+            form.save()
+            return redirect('user_list')
+    else:
+        form = TouristForm(instance=tourist)
+    return render(request, 'users/edit_user.html', {'form': form, 'user': user})
+
+
+@staff_member_required
+def delete_review(request, review_id):
+    review = get_object_or_404(Review, id=review_id)
+    if request.method == 'POST':
+        review.delete()
+        return redirect('review_list')
+    return render(request, 'reviews/delete_review.html', {'review': review})

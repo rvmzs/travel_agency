@@ -1,28 +1,12 @@
+<!-- tours/templates/home.html -->
 {% extends 'base.html' %}
 
 {% block title %}Добро пожаловать в наше онлайн-турагентство{% endblock %}
 
 {% block content %}
 <div style="display: flex; flex-direction: column; align-items: center; height: 100vh; justify-content: center;">
-    {% if user.is_authenticated %}
-        <h2>Добро пожаловать в наше онлайн-турагентство!</h2>
-        <p>Мы предлагаем лучшие туры по всему миру. Исследуйте новые горизонты и создавайте незабываемые воспоминания с нами!</p>
-        <!-- Здесь можно добавить дополнительные элементы, например, кнопки для просмотра туров или других услуг -->
-    {% else %}
-        <h2>Регистрация</h2>
-        <form action="{% url 'register' %}" method="post" style="width: 300px; background-image: url('tours\static\images\background.jpg'); background-size: cover; padding: 20px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);"> <!-- Изменено: добавлено фоновое изображение и стили -->
-            {% csrf_token %}
-            <div style="margin-bottom: 15px;">
-                <label for="username" style="display: block;">Имя пользователя:</label>
-                <input type="text" id="username" name="username" required style="width: 100%;">
-            </div>
-            <div style="margin-bottom: 15px;">
-                <label for="password" style="display: block;">Пароль:</label>
-                <input type="password" id="password" name="password" required style="width: 100%;">
-            </div>
-            <button type="submit" class="button" style="display: block; margin: 0 auto;">Зарегистрироваться</button>
-        </form>
-        <p>Уже есть аккаунт? <a href="{% url 'login' %}">Войти</a></p>
-    {% endif %}
+    <h2>Добро пожаловать в наше онлайн-турагентство!</h2>
+    <p>Мы предлагаем лучшие туры по всему миру. Исследуйте новые горизонты и создавайте незабываемые воспоминания с нами!</p>
+    <!-- Здесь можно добавить дополнительные элементы, например, кнопки для просмотра туров или других услуг -->
 </div>
 {% endblock %}

@@ -8,6 +8,15 @@
     <form method="post" action="">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit" class="button">Submit Review</button>
+        {% if form.errors %}
+            <div class="error-list">
+                {% for field in form %}
+                    {% for error in field.errors %}
+                        <p class="error">{{ error }}</p>
+                    {% endfor %}
+                {% endfor %}
+            </div>
+        {% endif %}
+        <button type="submit" class="button">Save Review</button>
     </form>
 {% endblock %}

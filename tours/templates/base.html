@@ -90,7 +90,9 @@
             {% if user.is_authenticated %}
                 <div class="auth-buttons">
                     <li><a href="{% url 'logout' %}">Logout</a></li>
+                    {% if not user.is_staff %}
                     <li><a href="{% url 'user_orders' %}">My Orders</a></li>
+                    {% endif %}
                     {% if user.is_staff %}
                         <li><a href="{% url 'add_tour' %}">Add Tour</a></li>
                         <li><a href="{% url 'add_guide' %}">Add Guide</a></li>
