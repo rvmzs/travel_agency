@@ -75,3 +75,11 @@ class TouristForm(forms.ModelForm):
     class Meta:
         model = Tourist
         fields = ['first_name', 'last_name', 'email', 'phone', 'date_of_birth']
+    
+    def __init__(self, *args, **kwargs):
+        super(TouristForm, self).__init__(*args, **kwargs)
+        self.fields['first_name'].widget.attrs.update({'class': 'form-control'})
+        self.fields['last_name'].widget.attrs.update({'class': 'form-control'})
+        self.fields['email'].widget.attrs.update({'class': 'form-control'})
+        self.fields['phone'].widget.attrs.update({'class': 'form-control'})
+        self.fields['date_of_birth'].widget.attrs.update({'class': 'form-control', 'type': 'date'})

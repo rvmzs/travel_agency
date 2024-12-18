@@ -22,8 +22,9 @@ urlpatterns = [
     path('guides/<int:guide_id>/edit/', views.edit_guide, name='edit_guide'),
     path('guides/<int:guide_id>/delete/', views.delete_guide, name='delete_guide'),
     path('orders/<int:order_id>/delete/', views.delete_order, name='delete_order'),
-    path('users/<int:user_id>/edit/', views.edit_user, name='edit_user'),  # Добавьте эту строку
+    path('users/<int:user_id>/edit/', views.edit_user, name='edit_user'),  
     path('users/<int:user_id>/delete/', views.delete_user, name='delete_user'),
     path('reviews/<int:review_id>/delete/', views.delete_review, name='delete_review'),
+    path('users/edit_profile/', views.edit_profile, name='edit_profile'),
 ]
 

@@ -4,59 +4,80 @@
 {% block title %}Review List{% endblock %}
 
 {% block content %}
-    <h1>Review List</h1>
-
-    <!-- Вставка стилей CSS -->
-    <style>
-        .review-list {
-            display: flex;
-            flex-direction: column;
-            gap: 20px; /* Расстояние между отзывами */
-        }
-
-        .review-item {
-            border: 1px solid #ccc; /* Граница вокруг каждого отзыва */
-            border-radius: 8px; /* Скругление углов */
-            padding: 15px; /* Внутренние отступы */
-            background-color: #f9f9f9; /* Цвет фона */
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Тень для визуального эффекта */
-        }
-
-        .review-item h2 {
-            margin: 0 0 10px; /* Отступы для заголовка */
-        }
-
-        .review-item p {
-            margin: 5px 0; /* Отступы между параграфами */
-        }
-
-        .button {
-            display: inline-block;
-            margin-top: 10px;
-            padding: 10px 15px;
-            background-color: #007BFF; /* Цвет фона кнопки */
-            color: white; /* Цвет текста кнопки */
-            text-decoration: none; /* Убираем подчеркивание */
-            border-radius: 5px; /* Скругление углов кнопки */
-        }
-
-        .button:hover {
-            background-color: #0056b3; /* Цвет фона кнопки при наведении */
-        }
-    </style>
-
-    <div class="review-list">
-        {% for review in reviews %}
-            <div class="review-item">
-                <h2>{{ review.tour.name_tour }}</h2>
-                <p><strong>Tourist:</strong> {{ review.tourist.user.username }}</p>
-                <p><strong>Rating:</strong> {{ review.rating }}</p>
-                <p><strong>Comment:</strong> {{ review.comment }}</p>
-                <p><strong>Date of Review:</strong> {{ review.date_of_review }}</p>
-                {% if request.user.is_staff %}
-                    <a href="{% url 'delete_review' review.id %}" class="button">Delete Review</a>
+<div class="review-list">
+    {% for tour in tours %}
+        <div class="tour-item">
+            <h2>{{ forloop.counter }}. {{ tour.name_tour }}</h2>
+            <div class="reviews">
+                {% if tour.reviews.all %}
+                    {% for review in tour.reviews.all %}
+                        <div class="review-item">
+                            <p><strong>Tourist:</strong> {{ review.tourist.user.username }}</p>
+                            <p><strong>Rating:</strong> {{ review.rating }}</p>
+                            <p><strong>Comment:</strong> {{ review.comment }}</p>
+                            <p><strong>Date of Review:</strong> {{ review.date_of_review }}</p>
+                            {% if request.user.is_staff %}
+                                <a href="{% url 'delete_review' review.id %}" class="button">Delete Review</a>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <p class="no-reviews">Пока нет отзывов для этого тура.</p>
                 {% endif %}
             </div>
-        {% endfor %}
-    </div>
+        </div>
+    {% endfor %}
+</div>
+
+<style>
+    .review-list {
+        max-width: 800px; /* Максимальная ширина списка отзывов */
+        margin: 20px auto; /* Центрирование списка */
+        padding: 20px; /* Внутренние отступы */
+        background-color: #f9f9f9; /* Цвет фона списка */
+        border-radius: 8px; /* Скругление углов */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Тень для визуального эффекта */
+    }
+
+    .tour-item {
+        margin-bottom: 20px; /* Отступ между турами */
+        padding: 15px; /* Внутренние отступы для каждого тура */
+        background-color: white; /* Цвет фона для каждого тура */
+        border-radius: 5px; /* Скругление углов для тура */
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Тень для визуального эффекта */
+    }
+
+    .reviews {
+        margin-top: 10px; /* Отступ сверху для отзывов */
+    }
+
+    .review-item {
+        border-left: 4px solid #007BFF; /* Левая граница для визуального выделения */
+        padding-left: 10px; /* Отступ слева */
+        margin-bottom: 10px; /* Отступ между отзывами */
+        background-color: #f1f1f1; /* Цвет фона для каждого отзыва */
+        border-radius: 4px; /* Скругление углов для отзыва */
+        padding: 10px; /* Внутренние отступы для отзыва */
+    }
+
+    .no-reviews {
+        color: #888; /* Цвет текста для отсутствующих отзывов */
+        font-style: italic; /* Курсив для текста */
+        margin-top: 10px; /* Отступ сверху */
+    }
+
+    .button {
+        display: inline-block; /* Отображение кнопки как блочный элемент */
+        padding: 8px 12px; /* Внутренние отступы кнопки */
+        background-color: #dc3545; /* Цвет фона кнопки удаления */
+        color: white; /* Цвет текста кнопки */
+        text-decoration: none; /* Убираем подчеркивание */
+        border-radius: 4px; /* Скругление углов кнопки */
+        margin-top: 10px; /* Отступ сверху */
+    }
+
+    .button:hover {
+        background-color: #c82333; /* Цвет фона кнопки при наведении */
+    }
+</style>
 {% endblock %}

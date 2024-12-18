@@ -19,9 +19,13 @@ def tour_list(request):
     tours = Tour.objects.all()
     return render(request, 'tours/tour_list.html', {'tours': tours})
 
+# def review_list(request):
+#     reviews = Review.objects.all()
+#     return render(request, 'reviews/review_list.html', {'reviews': reviews})
+
 def review_list(request):
-    reviews = Review.objects.all()
-    return render(request, 'reviews/review_list.html', {'reviews': reviews})
+    tours = Tour.objects.all()
+    return render(request, 'reviews/review_list.html', {'tours': tours})
 
 def user_list(request):
     users = User.objects.all()
@@ -200,3 +204,23 @@ def delete_review(request, review_id):
         review.delete()
         return redirect('review_list')
     return render(request, 'reviews/delete_review.html', {'review': review})
+
+
+@login_required
+def edit_profile(request):
+    user = request.user
+    tourist = get_object_or_404(Tourist, user=user)
+
+    if request.method == 'POST':
+        tourist_form = TouristForm(request.POST, instance=tourist)
+
+        if tourist_form.is_valid():
+            tourist_form.save()  # Сохранение автоматически обновляет User
+            return redirect('edit_profile')  # Переход на другую страницу или ту же
+
+    else:
+        tourist_form = TouristForm(instance=tourist)
+
+    return render(request, 'users/edit_profile.html', {
+        'tourist_form': tourist_form,
+    })

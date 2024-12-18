@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Редактировать профиль{% endblock %}
+
+{% block content %}
+<div style="display: flex; flex-direction: column; align-items: center; height: 100vh; justify-content: center;">
+    <h2>Редактировать профиль</h2>
+    <form method="post" novalidate>
+        {% csrf_token %}
+        {{ user_form.non_field_errors }}
+        {{ tourist_form.non_field_errors }}
+
+        <div style="margin-bottom: 15px;">
+            <label for="id_first_name" style="display: block;">Имя:</label>
+            {{ tourist_form.first_name }}
+            {% if tourist_form.first_name.errors %}
+                <div class="error">{{ tourist_form.first_name.errors }}</div>
+            {% endif %}
+        </div>
+        
+        <div style="margin-bottom: 15px;">
+            <label for="id_last_name" style="display: block;">Фамилия:</label>
+            {{ tourist_form.last_name }}
+            {% if tourist_form.last_name.errors %}
+                <div class="error">{{ tourist_form.last_name.errors }}</div>
+            {% endif %}
+        </div>
+        
+        <div style="margin-bottom: 15px;">
+            <label for="id_email" style="display: block;">Email:</label>
+            {{ tourist_form.email }}
+            {% if tourist_form.email.errors %}
+                <div class="error">{{ tourist_form.email.errors }}</div>
+            {% endif %}
+        </div>
+
+        <div style="margin-bottom: 15px;">
+            <label for="id_phone" style="display: block;">Номер телефона:</label>
+            {{ tourist_form.phone }}  <!-- Убедитесь, что это правильно поле -->
+            {% if tourist_form.phone.errors %}
+                <div class="error">{{ tourist_form.phone.errors }}</div>
+            {% endif %}
+        </div>
+
+        <div style="margin-bottom: 15px;">
+            <label for="id_date_of_birth" style="display: block;">Дата рождения:</label>
+            {{ tourist_form.date_of_birth }}  <!-- Убедитесь, что это правильно поле -->
+            {% if tourist_form.date_of_birth.errors %}
+                <div class="error">{{ tourist_form.date_of_birth.errors }}</div>
+            {% endif %}
+        </div>
+        
+        <button type="submit" class="button" style="display: block; margin: 0 auto;">Сохранить изменения</button>
+        
+        {% if user_form.errors or tourist_form.errors %}
+            <div class="error-list" style="color: red;">
+                <p>Пожалуйста, исправьте ошибки ниже:</p>
+                {% for field in user_form %}
+                    {% for error in field.errors %}
+                        <p class="error">{{ error }}</p>
+                    {% endfor %}
+                {% endfor %}
+                {% for field in tourist_form %}
+                    {% for error in field.errors %}
+                        <p class="error">{{ error }}</p>
+                    {% endfor %}
+                {% endfor %}
+            </div>
+        {% endif %}
+    </form>
+</div>
+{% endblock %}

@@ -1,3 +1,4 @@
+<!-- tours/templates/base.html -->
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
@@ -91,7 +92,8 @@
                 <div class="auth-buttons">
                     <li><a href="{% url 'logout' %}">Logout</a></li>
                     {% if not user.is_staff %}
-                    <li><a href="{% url 'user_orders' %}">My Orders</a></li>
+                        <li><a href="{% url 'user_orders' %}">My Orders</a></li>
+                        <li><a href="{% url 'edit_profile' %}">Edit Profile</a></li> <!-- Добавляем кнопку для редактирования профиля -->
                     {% endif %}
                     {% if user.is_staff %}
                         <li><a href="{% url 'add_tour' %}">Add Tour</a></li>

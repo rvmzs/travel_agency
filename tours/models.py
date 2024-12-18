@@ -13,6 +13,14 @@ class Tourist(models.Model):
 
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
+    
+    def save(self, *args, **kwargs):
+        # Обновляем значения в таблице User
+        self.user.first_name = self.first_name
+        self.user.last_name = self.last_name
+        self.user.email = self.email
+        self.user.save()  # Сохранить изменения в User
+        super().save(*args, **kwargs)  # Затем вызвать метод родителя
 
 
 class Tour(models.Model):
