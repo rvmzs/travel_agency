@@ -2,7 +2,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.models import User
 from .models import Guide, Tour, Review, Tourist, Order
-from .forms import GuideForm, TourForm, RegisterForm, ReviewForm, TouristForm
+from .forms import GuideForm, TourForm, RegisterForm, ReviewForm, TouristForm, TourSearchForm, GuideSearchForm
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
@@ -215,8 +215,8 @@ def edit_profile(request):
         tourist_form = TouristForm(request.POST, instance=tourist)
 
         if tourist_form.is_valid():
-            tourist_form.save()  # Сохранение автоматически обновляет User
-            return redirect('edit_profile')  # Переход на другую страницу или ту же
+            tourist_form.save()  
+            return redirect('edit_profile')  
 
     else:
         tourist_form = TouristForm(instance=tourist)
@@ -224,3 +224,29 @@ def edit_profile(request):
     return render(request, 'users/edit_profile.html', {
         'tourist_form': tourist_form,
     })
+
+#####################################################
+
+
+
+def search_tours(request):
+    form = TourSearchForm(request.GET)  # Создаем форму с GET-запросом
+    tours = Tour.objects.all()  # Сначала получаем всех туров
+    if form.is_valid():  # Проверяем, что форма валидна
+        name_tour = form.cleaned_data.get('name_tour')
+        if name_tour:  # Если введено имя тура
+            tours = tours.filter(name_tour__icontains=name_tour)  # Фильтруем по имени
+            # tours = tours.distinct()  # Убедитесь, что уникальные результаты, если требуется
+    
+    return render(request, 'tours/tour_list.html', {'form': form, 'tours': tours})
+
+def search_guides(request):
+    form = GuideSearchForm(request.GET)  # Создаем форму с GET-запросом
+    guides = Guide.objects.all()  # Получаем всех гидов по умолчанию
+
+    if form.is_valid():  # Проверяем, что форма валидна
+        last_name = form.cleaned_data.get('last_name')
+        if last_name:  # Если введена фамилия
+            guides = guides.filter(last_name__icontains=last_name)  # Фильтруем по фамилии
+
+    return render(request, 'guides/guide_list.html', {'form': form, 'guides': guides})

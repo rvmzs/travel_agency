@@ -83,3 +83,11 @@ class TouristForm(forms.ModelForm):
         self.fields['email'].widget.attrs.update({'class': 'form-control'})
         self.fields['phone'].widget.attrs.update({'class': 'form-control'})
         self.fields['date_of_birth'].widget.attrs.update({'class': 'form-control', 'type': 'date'})
+
+
+class GuideSearchForm(forms.Form):
+    last_name = forms.CharField(label='Last Name', max_length=30, required=False)
+
+
+class TourSearchForm(forms.Form):
+    name_tour = forms.CharField(label='Tour Name', max_length=100, required=False)

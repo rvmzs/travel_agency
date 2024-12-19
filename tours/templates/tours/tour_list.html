@@ -42,42 +42,66 @@
         .button:hover {
             background-color: #0056b3;
         }
+
+        .search-form {
+            margin-bottom: 20px;
+        }
+
+        .search-input {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-right: 10px;
+            width: 300px; /* ширина поля ввода */
+        }
     </style>
 
+    <div class="search-form">
+        <form method="get" action="{% url 'search_tours' %}">
+            {% csrf_token %}
+            <input type="text" name="name_tour" class="search-input" placeholder="Поиск тура по названию..." value="{{ request.GET.name_tour }}">
+            <button type="submit">Поиск</button>
+        </form>
+    </div>
+
     <div class="tour-list">
-        {% for tour in tours %}
-            <div class="tour-item">
-                <h2>{{ tour.name_tour }}</h2>
-                <p><strong>Start Date:</strong> {{ tour.date_of_start }}</p>
-                <p><strong>End Date:</strong> {{ tour.date_of_end }}</p>
-                <p>{{ tour.description }}</p>
-                <p><strong>Price:</strong> ${{ tour.price }}</p>
-                <div class="rating">
-                    <p><strong>Average Rating:</strong> {{ tour.average_rating|floatformat:2 }}</p>
-                </div>
-                <div class="guides">
-                    <p><strong>Guides:</strong></p>
-                    <ul>
-                        {% for tourguide in tour.tourguide_set.all %}
-                            <li>{{ tourguide.guide.first_name }} {{ tourguide.guide.last_name }} ({{ tourguide.guide.language }})</li>
-                        {% endfor %}
-                    </ul>
-                </div>
-                <div class="tour-actions">
-                    {% if user.is_authenticated %}
-                        {% if not user.is_staff %}
-                        <a href="{% url 'add_review' tour.id %}" class="button">Add Review</a>
-                        <a href="{% url 'order_tour' tour.id %}" class="button">Order Now</a>
+        {% if tours %}
+            {% for tour in tours %}
+                <div class="tour-item">
+                    <h2>{{ tour.name_tour }}</h2>
+                    <p><strong>Start Date:</strong> {{ tour.date_of_start }}</p>
+                    <p><strong>End Date:</strong> {{ tour.date_of_end }}</p>
+                    <p>{{ tour.description }}</p>
+                    <p><strong>Price:</strong> ${{ tour.price }}</p>
+                    <div class="rating">
+                        <p><strong>Average Rating:</strong> {{ tour.average_rating|floatformat:2 }}</p>
+                    </div>
+                    <div class="guides">
+                        <p><strong>Guides:</strong></p>
+                        <ul>
+                            {% for tourguide in tour.tourguide_set.all %}
+                                <li>{{ tourguide.guide.first_name }} {{ tourguide.guide.last_name }} ({{ tourguide.guide.language }})</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    <div class="tour-actions">
+                        {% if user.is_authenticated %}
+                            {% if not user.is_staff %}
+                                <a href="{% url 'add_review' tour.id %}" class="button">Add Review</a>
+                                <a href="{% url 'order_tour' tour.id %}" class="button">Order Now</a>
+                            {% endif %}
+                            {% if user.is_staff %}
+                                <a href="{% url 'edit_tour' tour.id %}" class="button">Edit Tour</a>
+                                <a href="{% url 'delete_tour' tour.id %}" class="button">Delete Tour</a>
+                            {% endif %}
+                        {% else %}
+                            <p>Please <a href="{% url 'login' %}">log in</a> to add a review or order a tour.</p>
                         {% endif %}
-                        {% if user.is_staff %}
-                            <a href="{% url 'edit_tour' tour.id %}" class="button">Edit Tour</a>
-                            <a href="{% url 'delete_tour' tour.id %}" class="button">Delete Tour</a>
-                        {% endif %}
-                    {% else %}
-                        <p>Please <a href="{% url 'login' %}">log in</a> to add a review or order a tour.</p>
-                    {% endif %}
+                    </div>
                 </div>
-            </div>
-        {% endfor %}
+            {% endfor %}
+        {% else %}
+            <p>No tours found.</p>
+        {% endif %}
     </div>
 {% endblock %}

@@ -4,7 +4,7 @@
 
 {% block content %}
     <h1>Guide List</h1>
-    
+
     <style>
         .guide-list {
             display: flex;
@@ -38,7 +38,27 @@
         .button:hover {
             background-color: #0056b3;
         }
+
+        .search-form {
+            margin-bottom: 20px;
+        }
+
+        .search-input {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-right: 10px;
+            width: 300px; /* ширина поля ввода */
+        }
     </style>
+
+    <div class="search-form">
+        <form method="get" action="{% url 'search_guides' %}">
+            {% csrf_token %}
+            <input type="text" name="last_name" class="search-input" placeholder="Поиск гида по фамилии..." value="{{ request.GET.last_name }}">
+            <button type="submit">Поиск</button>
+        </form>
+    </div>
 
     <div class="guide-list">
         {% for guide in guides %}
